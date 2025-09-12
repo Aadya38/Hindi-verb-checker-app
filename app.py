@@ -17,10 +17,12 @@ for _, row in df.iterrows():
         form_to_row[form] = row
     if pd.notnull(row['romanized']):
         form_to_row[row['romanized'].strip().lower()] = row
+
+# ---- Stats ----
 df_no_v = df_plot[df_plot["root"].str.strip().str.lower() != "v"]
 
 longest = df_plot.loc[df_plot["root_length"].idxmax()]
-shortest = df_no_v.loc[df_no_v["root_length"].idxmin()]   
+shortest = df_no_v.loc[df_no_v["root_length"].idxmin()]   # ✅ excludes "v"
 avg_length = df_plot["root_length"].mean()
 total_verbs = len(df_plot)
 
@@ -34,7 +36,7 @@ page = st.sidebar.radio("📌 Navigate", ["Home", "Stats", "Top 20"])
 if page == "Home":
     st.title("📖 Hindi Verb Info Checker")
     st.markdown("""
-    <div style="background-color:#f9f9f9; padding:10px; border-radius:10px;">
+    <div style="background-color:#f9f9f9; color:#000000; padding:10px; border-radius:10px;">
     <b>Check if your favourite Hindi Verb is in our list. Get info about its frequency and forms.</b>
     </div>
     """, unsafe_allow_html=True)
@@ -56,13 +58,14 @@ if page == "Home":
             st.balloons()
         else:
             st.error(f"❌ '{user_input}' is NOT found in the verb forms.")
-st.markdown("""
-<div style="background-color:#e8f0fe; color:#000000; padding:10px; border-radius:10px;">
-If your verb is not in our list, submit it here:
-<a href="https://docs.google.com/document/d/..." target="_blank">📄 Submit a Verb</a>.
-</div>
-""", unsafe_allow_html=True)
 
+    # ✅ keep this inside "Home"
+    st.markdown("""
+    <div style="background-color:#e8f0fe; color:#000000; padding:10px; border-radius:10px;">
+    If your verb is not in our list, submit it here:
+    <a href="https://docs.google.com/document/d/..." target="_blank">📄 Submit a Verb</a>.
+    </div>
+    """, unsafe_allow_html=True)
 
 # ---- Stats ----
 elif page == "Stats":
@@ -75,7 +78,8 @@ elif page == "Stats":
 
     if st.button("Show Distribution of Verb Lengths"):
         fig, ax = plt.subplots(figsize=(8, 6))
-        ax.hist(df_plot["root_length"], bins=range(1, df_plot["root_length"].max()+2), color='skyblue', edgecolor='black')
+        ax.hist(df_plot["root_length"], bins=range(1, df_plot["root_length"].max() + 2),
+                color='skyblue', edgecolor='black')
         ax.set_xlabel("Root Length")
         ax.set_ylabel("Number of Verbs")
         ax.set_title("Distribution of Verb Lengths")
@@ -83,7 +87,8 @@ elif page == "Stats":
 
     if st.button("Show Frequency vs Root Length"):
         fig1, ax1 = plt.subplots(figsize=(8, 6))
-        ax1.scatter(df_plot["root_length"], df_plot["frequency"], color='royalblue', alpha=0.7, edgecolors='w', s=80)
+        ax1.scatter(df_plot["root_length"], df_plot["frequency"],
+                    color='royalblue', alpha=0.7, edgecolors='w', s=80)
         ax1.set_xlabel("Root Length")
         ax1.set_ylabel("Frequency")
         ax1.set_title("Frequency vs Root Length")
@@ -110,6 +115,7 @@ elif page == "Top 20":
     st.dataframe(df_sorted[["root", "frequency", "root_length"]])
 
     fig, ax = plt.subplots(figsize=(10, 6))
+    # safer to use "root" instead of "romanized"
     ax.barh(df_sorted["romanized"], df_sorted["frequency"], color='lightgreen')
     ax.invert_yaxis()
     ax.set_xlabel("Frequency")
