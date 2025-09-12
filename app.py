@@ -18,9 +18,9 @@ for _, row in df.iterrows():
     if pd.notnull(row['romanized']):
         form_to_row[row['romanized'].strip().lower()] = row
 df_no_v = df_plot[df_plot["root"].str.strip().str.lower() != "v"]
-# ---- Stats ----
+
 longest = df_plot.loc[df_plot["root_length"].idxmax()]
-shortest = df_plot.loc[df_plot["root_length"].idxmin()]
+shortest = df_no_v.loc[df_no_v["root_length"].idxmin()]   
 avg_length = df_plot["root_length"].mean()
 total_verbs = len(df_plot)
 
