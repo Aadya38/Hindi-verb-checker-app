@@ -22,7 +22,7 @@ for _, row in df.iterrows():
 df_no_v = df_plot[df_plot["root"].str.strip().str.lower() != "v"]
 
 longest = df_plot.loc[df_plot["root_length"].idxmax()]
-shortest = df_no_v.loc[df_no_v["root_length"].idxmin()]   # ✅ excludes "v"
+shortest = df_no_v.loc[df_no_v["root_length"].idxmin()]  # excludes "v"
 avg_length = df_plot["root_length"].mean()
 total_verbs = len(df_plot)
 
@@ -43,30 +43,28 @@ if page == "Home":
 
     user_input = st.text_input("🔍 Enter a Hindi verb (Devanagari or Romanized):")
 
-   if user_input:
-    user_input_clean = user_input.strip()
+    if user_input:
+        user_input_clean = user_input.strip()
 
-    # Try exact Devanagari match first
-    row = form_to_row.get(user_input_clean)
-    # If not found, try romanized lowercased
-    if row is None:
-        row = form_to_row.get(user_input_clean.lower())
+        # Try exact Devanagari match first
+        row = form_to_row.get(user_input_clean)
+        # If not found, try romanized lowercased
+        if row is None:
+            row = form_to_row.get(user_input_clean.lower())
 
-    st.progress(50)
+        st.progress(50)
 
-    if row is not None:
-        st.success(f"✅ '{user_input}' is found!")
-        st.markdown(f"**Root:** {row['root']}")
-        st.markdown(f"**Verb Forms:** {row['verb_forms']}")
-        st.markdown(f"**Count of Verb Forms:** {row['count_vf']}")
-        st.markdown(f"**Frequency:** {row['frequency']}")
-        st.markdown(f"**English Gloss (romanized):** {row['romanized']}")
-        st.balloons()
-    else:
-        st.error(f"❌ '{user_input}' is NOT found in the verb forms.")
+        if row is not None and isinstance(row, pd.Series):
+            st.success(f"✅ '{user_input}' is found!")
+            st.markdown(f"**Root:** {row['root']}")
+            st.markdown(f"**Verb Forms:** {row['verb_forms']}")
+            st.markdown(f"**Count of Verb Forms:** {row['count_vf']}")
+            st.markdown(f"**Frequency:** {row['frequency']}")
+            st.markdown(f"**English Gloss (romanized):** {row['romanized']}")
+            st.balloons()
+        else:
+            st.error(f"❌ '{user_input}' is NOT found in the verb forms.")
 
-
-    # ✅ keep this inside "Home"
     st.markdown("""
     <div style="background-color:#e8f0fe; color:#000000; padding:10px; border-radius:10px;">
     If your verb is not in our list, submit it here:
@@ -119,11 +117,10 @@ elif page == "Top 20":
     st.title("🏆 Top 20 Verbs by Frequency")
 
     df_sorted = df_plot.sort_values(by="frequency", ascending=False).head(20)
-    st.dataframe(df_sorted[["root", "frequency", "root_length"]])
+    st.dataframe(df_sorted[["romanized", "frequency", "root_length"]])
 
     fig, ax = plt.subplots(figsize=(10, 6))
-    # safer to use "root" instead of "romanized"
-    ax.barh(df_sorted["romanized"], df_sorted["frequency"], color='lightgreen')
+    ax.barh(df_sorted["root"], df_sorted["frequency"], color='lightgreen')
     ax.invert_yaxis()
     ax.set_xlabel("Frequency")
     ax.set_title("Top 20 Verbs by Frequency")
