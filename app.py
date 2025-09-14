@@ -43,21 +43,28 @@ if page == "Home":
 
     user_input = st.text_input("🔍 Enter a Hindi verb (Devanagari or Romanized):")
 
-    if user_input:
-        user_input_clean = user_input.strip()
-        row = form_to_row.get(user_input_clean) or form_to_row.get(user_input_clean.lower())
-        st.progress(50)
+   if user_input:
+    user_input_clean = user_input.strip()
 
-        if row is not None:
-            st.success(f"✅ '{user_input}' is found!")
-            st.markdown(f"**Root:** {row['root']}")
-            st.markdown(f"**Verb Forms:** {row['verb_forms']}")
-            st.markdown(f"**Count of Verb Forms:** {row['count_vf']}")
-            st.markdown(f"**Frequency:** {row['frequency']}")
-            st.markdown(f"**English Gloss (romanized):** {row['romanized']}")
-            st.balloons()
-        else:
-            st.error(f"❌ '{user_input}' is NOT found in the verb forms.")
+    # Try exact Devanagari match first
+    row = form_to_row.get(user_input_clean)
+    # If not found, try romanized lowercased
+    if row is None:
+        row = form_to_row.get(user_input_clean.lower())
+
+    st.progress(50)
+
+    if row is not None:
+        st.success(f"✅ '{user_input}' is found!")
+        st.markdown(f"**Root:** {row['root']}")
+        st.markdown(f"**Verb Forms:** {row['verb_forms']}")
+        st.markdown(f"**Count of Verb Forms:** {row['count_vf']}")
+        st.markdown(f"**Frequency:** {row['frequency']}")
+        st.markdown(f"**English Gloss (romanized):** {row['romanized']}")
+        st.balloons()
+    else:
+        st.error(f"❌ '{user_input}' is NOT found in the verb forms.")
+
 
     # ✅ keep this inside "Home"
     st.markdown("""
