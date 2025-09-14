@@ -117,10 +117,10 @@ elif page == "Top 20":
     st.title("🏆 Top 20 Verbs by Frequency")
 
     df_sorted = df_plot.sort_values(by="frequency", ascending=False).head(20)
-    st.dataframe(df_sorted[["romanized", "frequency", "root_length"]])
+    st.dataframe(df_sorted[["root", "frequency", "root_length"]])
 
     fig, ax = plt.subplots(figsize=(10, 6))
-    ax.barh(df_sorted["root"], df_sorted["frequency"], color='lightgreen')
+    ax.barh(df_sorted["romanized"], df_sorted["frequency"], color='lightgreen')
     ax.invert_yaxis()
     ax.set_xlabel("Frequency")
     ax.set_title("Top 20 Verbs by Frequency")
