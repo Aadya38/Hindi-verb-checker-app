@@ -73,7 +73,7 @@ if page == "Home":
     """, unsafe_allow_html=True)
 
 # ---- Stats ----
-elif page == "Stats":
+elif page == "Fun facts about Hindi verbs":
     st.title("📊 Verb Statistics & Fun Facts")
 
     st.markdown(f"- 📏 Longest verb: **{longest['root']}** (length {longest['root_length']})")
@@ -113,7 +113,7 @@ elif page == "Stats":
         st.pyplot(fig2)
 
 # ---- Top 20 ----
-elif page == "Top 20":
+elif page == "Top 20 Hindi Verbs":
     st.title("🏆 Top 20 Verbs by Frequency")
 
     df_sorted = df_plot.sort_values(by="frequency", ascending=False).head(20)
