@@ -68,7 +68,7 @@ if page == "Home":
     st.markdown("""
     <div style="background-color:#e8f0fe; color:#000000; padding:10px; border-radius:10px;">
     If your verb is not in our list, submit it here:
-    <a href="https://docs.google.com/document/d/1F3x4JV6eZ6Od3psyjmQwo_XPvpDZ-KHvO0ns7JEL5eI/edit?usp=sharing" target="_blank">📄 Submit a Verb</a>.
+    <a href="https://docs.google.com/forms/d/e/1FAIpQLSfrK6Z3fcHDa8iB5Ct--FV1e4r57ZS0RmktCanKfheMK6nSMA/viewform?usp=header" target="_blank">📄 Submit a Verb</a>.
     </div>
     """, unsafe_allow_html=True)
 
