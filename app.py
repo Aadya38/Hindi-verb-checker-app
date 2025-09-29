@@ -30,7 +30,7 @@ total_verbs = len(df_plot)
 st.set_page_config(page_title="Hindi Verb Info Checker", page_icon="📚", layout="wide")
 
 # ---- Sidebar Navigation ----
-page = st.sidebar.radio("📌 Navigate", ["Home", "Stats", "Top 20"])
+page = st.sidebar.radio("📌 Navigate", ["Home", "Fun facts about Hindi verbs", "Top 20 Hindi Verbs"])
 
 # ---- Home ----
 if page == "Home":
