@@ -63,7 +63,7 @@ if page == "Home":
 
     st.markdown("""
     <div style="background-color:#e8f0fe; color:#000000; padding:10px; border-radius:10px;">
-    We have 722 Hindi verbs in our list. See if your favorite verb is there and if it is not, submit it for inclusion!
+   हमारी सूची में ७२२ हिन्दी क्रियायें हैं। यदि आपकी क्रिया उपलब्ध नहीं है, तो कृपया उसे सम्मिलित करने हेतु प्रस्तुत करें।
     <a href="https://docs.google.com/forms/d/e/1FAIpQLSfrK6Z3fcHDa8iB5Ct--FV1e4r57ZS0RmktCanKfheMK6nSMA/viewform?usp=header" target="_blank">📄 Submit a Verb</a>.
     </div>
     """, unsafe_allow_html=True)
