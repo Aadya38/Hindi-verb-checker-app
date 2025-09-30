@@ -34,12 +34,8 @@ page = st.sidebar.radio("📌 Navigate", ["Home", "Fun facts about Hindi verbs",
 
 # ---- Home ----
 if page == "Home":
-    st.title("📖 Hindi Verb Info Checker")
-    st.markdown("""
-    <div style="background-color:#f9f9f9; color:#000000; padding:10px; border-radius:10px;">
-    <b>Check if your favourite Hindi Verb is in our list. Get info about its frequency and forms.</b>
-    </div>
-    """, unsafe_allow_html=True)
+    st.title("📖 Check if your favourite Hindi Verb is in our list. Get info about its frequency and forms.")
+    
 
     user_input = st.text_input("🔍 Enter a Hindi verb (Devanagari or Romanized):")
 
